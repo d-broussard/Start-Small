@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public float speed = 0;
+    public Light myLight;
+    public float originalRange;
     public TextMeshProUGUI countText;
     public GameObject winTextObject;
     public GameObject startTextObject;
@@ -15,11 +17,11 @@ public class PlayerController : MonoBehaviour
     private int count; 
     private float movementX;
     private float movementY;
-
-    
-    
     public GameObject player;
     private Vector3 scaleChange, positionChange;
+    public GameObject startText2Object;
+    public GameObject rampObject;
+
 
     
     // Start is called before the first frame update
@@ -31,6 +33,11 @@ public class PlayerController : MonoBehaviour
         SetCountText();
         winTextObject.SetActive(false);
         startTextObject.SetActive(true);
+        myLight = GetComponent<Light>();
+        originalRange = myLight.range;
+        rampObject.SetActive(false);
+
+        
 
     
     }
@@ -50,13 +57,17 @@ public class PlayerController : MonoBehaviour
         if(count >=5)
         {
             startTextObject.SetActive(false);
-        
         }
 
         if(count <= 0)
         {
             winTextObject.SetActive(true);
-            
+            Invoke("level2", 3);
+        }
+
+        if(count <=1)
+        {
+            rampObject.SetActive(true);
         }
     }
 
@@ -75,7 +86,7 @@ public class PlayerController : MonoBehaviour
             count = count - 1;
             SetCountText ();
             transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
-           
+            myLight.range = originalRange * 14/10;
 
         }
 
@@ -83,5 +94,24 @@ public class PlayerController : MonoBehaviour
         {
           SceneManager.LoadScene(0);
         }
+
+        if(other.gameObject.CompareTag("restart2"))
+        {
+            SceneManager.LoadScene(1);
+        }
+
+        if(other.gameObject.CompareTag("RemoveStartText"))
+        {
+            startText2Object.SetActive(false);
+        }
     }
+
+    public void level2()
+    {
+        SceneManager.LoadScene(1);
+        winTextObject.SetActive(false);
+       
+    }
+
+
 }

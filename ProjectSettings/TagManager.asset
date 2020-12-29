@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Pickup
   - restart
+  - restart2
+  - RemoveStartText
   layers:
   - Default
   - TransparentFX
