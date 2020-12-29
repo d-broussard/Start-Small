@@ -35,7 +35,7 @@ public class PlayerController : MonoBehaviour
         startTextObject.SetActive(true);
         myLight = GetComponent<Light>();
         originalRange = myLight.range;
-        rampObject.SetActive(false);
+        rampObject.SetActive(false);   
 
         
 
@@ -62,12 +62,12 @@ public class PlayerController : MonoBehaviour
         if(count <= 0)
         {
             winTextObject.SetActive(true);
-            Invoke("level2", 3);
+            Invoke("level2", 3);                //transitions to next level
         }
 
         if(count <=1)
         {
-            rampObject.SetActive(true);
+            rampObject.SetActive(true);         //activates ramp at the end of level 2
         }
     }
 
@@ -85,28 +85,28 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             count = count - 1;
             SetCountText ();
-            transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);
-            myLight.range = originalRange * 14/10;
+            transform.localScale += new Vector3(0.1f, 0.1f, 0.1f);      //increases the size of the player after collecting each orb
+            myLight.range = originalRange * 14/10;              //increases the range of the player component after collecting each orb
 
         }
 
         if(other.gameObject.CompareTag("restart"))
         {
-          SceneManager.LoadScene(0);
+          SceneManager.LoadScene(0);            //kills and restarts the player if they fall
         }
 
         if(other.gameObject.CompareTag("restart2"))
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(1);          //kills and restarts the player if they fall
         }
 
         if(other.gameObject.CompareTag("RemoveStartText"))
         {
-            startText2Object.SetActive(false);
+            startText2Object.SetActive(false);         //removes the start text of level 2 after progressing forward
         }
     }
 
-    public void level2()
+    public void level2()                // used to transition between levels
     {
         SceneManager.LoadScene(1);
         winTextObject.SetActive(false);
